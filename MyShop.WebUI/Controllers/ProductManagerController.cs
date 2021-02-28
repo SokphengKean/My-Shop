@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
 
 namespace MyShop.WebUI.Controllers
@@ -11,17 +12,12 @@ namespace MyShop.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepository context;
+		ProductCategoryRepository productCategory;
 
 		public ProductManagerController()
 		{
             context = new ProductRepository();
-   //         Product product = new Product();
-			//product.Name = "Name pro";
-			//product.Description = " Description Pro";
-			//product.Price = 10;
-			//product.Category = "cate";
-			//context.Insert(product);
-			//context.Commit();
+			productCategory = new ProductCategoryRepository();
 		}
 
 
@@ -35,8 +31,10 @@ namespace MyShop.WebUI.Controllers
 		#region Add Product
 		public ActionResult Create()
 		{
-            Product product = new Product();
-            return View(product);
+			ProductManagerViewModel productManagerViewModel = new ProductManagerViewModel();
+			productManagerViewModel.product = new Product();
+			productManagerViewModel.productCategories = productCategory.Collection();
+            return View(productManagerViewModel);
 		}
 
 		[HttpPost]
@@ -62,7 +60,12 @@ namespace MyShop.WebUI.Controllers
 			if (product == null)
 				return HttpNotFound();
 			else
-				return View(product);
+			{
+				ProductManagerViewModel productManagerViewModel = new ProductManagerViewModel();
+				productManagerViewModel.product = product;
+				productManagerViewModel.productCategories = productCategory.Collection();
+				return View(productManagerViewModel);
+			}
 		}
 
 		[HttpPost]
