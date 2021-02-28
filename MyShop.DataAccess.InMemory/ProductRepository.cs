@@ -23,7 +23,7 @@ namespace MyShop.DataAccess.InMemory
 
 		public void Commit()
 		{
-			cache["prodcuts"] = products;
+			cache["products"] = products;
 		}
 
 		public void Insert(Product product)
@@ -35,14 +35,17 @@ namespace MyShop.DataAccess.InMemory
 		{
 			var pro = products.Where(p => p.Id == product.Id).FirstOrDefault();
 			if (pro != null)
+			{
 				pro = product;
+
+			}
 			else
 				throw new Exception("Product not found.");
 		}
 
-		public void Delete(string Id)
+		public void Delete(Product deleteProduct)
 		{
-			var product = products.Where(p => p.Id == Id).FirstOrDefault();
+			var product = products.Where(p => p.Id == deleteProduct.Id).FirstOrDefault();
 			if (product != null)
 				products.Remove(product);
 			else
