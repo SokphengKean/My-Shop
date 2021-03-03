@@ -4,29 +4,33 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row  mt-4">
-	<div class="col-md-4">
-		<div class="list-group" id="list-tab" role="tablist">
-			@Html.ActionLink("All" , "Index" , null , new { @class = "list-group-item list-group-item-action active" })
+<div class="row">
+	<div class="col-md-4 p-4">
+		<div class="list-group m-0" id="list-tab" role="tablist">
+			@Html.ActionLink("All" , "Index" , null , new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
 			@foreach (var cate in Model.productCategories)
 			{
-				@Html.ActionLink(cate.Name, "Index" , new { Category = cate.Name} , new { @class = "list-group-item list-group-item-action" })
+				@Html.ActionLink(cate.Name, "Index" , new { Category = cate.Name} , new { @class = Request["Category"] == cate.Name ? "list-group-item active": "list-group-item" })
 			}
 		</div>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-8 p-4">
 		<div class="card-deck">
-			@foreach (var item in Model.product)
-			{
-				<div class="card">
-					<img class="card-img-top" src="~/Content/ProductImages/@item.Image" alt="Card image cap" />
-					<div class="card-body">
-						<h5 class="card-title">@item.Name</h5>
-						<p class="card-text">@item.Description</p>
-						@Html.ActionLink("Detail" , "Detail" , new { Id = item.Id } , new { @class = "btn btn-primary" })
+			<div class="row">
+				@foreach (var item in Model.product)
+				{
+				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 p-0">
+					<div class="card m-2">
+						<img class="img-fluid" src="~/Content/ProductImages/@item.Image" alt="Card image cap" />
+						<div class="card-body">
+							<h5 class="card-title">@item.Name</h5>
+							<p class="card-text">@item.Description</p>
+							@Html.ActionLink("Detail" , "Detail" , new { Id = item.Id } , new { @class = "btn btn-primary" })
+						</div>
 					</div>
 				</div>
-			}
+				}
+			</div>
 		</div>
 	</div>
 </div>
