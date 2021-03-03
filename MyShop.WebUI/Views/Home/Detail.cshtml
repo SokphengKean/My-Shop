@@ -1,0 +1,25 @@
+﻿@model MyShop.Core.Models.Product
+
+@{
+	ViewBag.Title = "Detail";
+}
+
+<h2 class="mt-4">Product Detail</h2>
+<hr />
+
+<div class="row">
+	<div class="col-md-4">
+		<img class="img-thumbnail" src="~/Content/ProductImages/@Model.Image" alt="product image" />
+	</div>
+	<div class="col-md-8" style="font-size:1.5rem">
+		<p><span class="font-weight-bold">Name : </span> @Model.Name</p>
+		<p><span class="font-weight-bold">Category : </span> @Model.Category</p>
+		<p><span class="font-weight-bold">Description : </span> @Model.Description</p>
+		<p><span class="font-weight-bold">Price : </span> $@Model.Price</p>
+		<p class="text-md-right">
+			@Html.ActionLink("Edit" , "Edit" , "ProductManager" , new { id = Model.Id } , new { @class = "btn btn-warning" })
+			@Html.ActionLink("Back to List" , "Index" , "Home" , new { @class = "btn btn-primary" })
+		</p>
+	</div>
+</div>
+
