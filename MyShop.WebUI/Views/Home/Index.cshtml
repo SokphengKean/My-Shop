@@ -1,19 +1,33 @@
-﻿@model IEnumerable<MyShop.Core.Models.Product>
+﻿@model MyShop.Core.ViewModels.ProductListViewModel
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<div class="card-deck mt-4">
-	@foreach (var item in Model)
-	{
-		<div class="card">
-			<img class="card-img-top" src="~/Content/ProductImages/@item.Image" alt="Card image cap" />
-			<div class="card-body">
-				<h5 class="card-title">@item.Name</h5>
-				<p class="card-text">@item.Description</p>
-				@Html.ActionLink("Detail" , "Detail" , new { Id = item.Id }, new { @class = "btn btn-primary" })
-			</div>
+<div class="row  mt-4">
+	<div class="col-md-4">
+		<div class="list-group" id="list-tab" role="tablist">
+			@Html.ActionLink("All" , "Index" , null , new { @class = "list-group-item list-group-item-action active" })
+			@foreach (var cate in Model.productCategories)
+			{
+				@Html.ActionLink(cate.Name, "Index" , new { Category = cate.Name} , new { @class = "list-group-item list-group-item-action" })
+			}
 		</div>
-	}
+	</div>
+	<div class="col-md-8">
+		<div class="card-deck">
+			@foreach (var item in Model.product)
+			{
+				<div class="card">
+					<img class="card-img-top" src="~/Content/ProductImages/@item.Image" alt="Card image cap" />
+					<div class="card-body">
+						<h5 class="card-title">@item.Name</h5>
+						<p class="card-text">@item.Description</p>
+						@Html.ActionLink("Detail" , "Detail" , new { Id = item.Id } , new { @class = "btn btn-primary" })
+					</div>
+				</div>
+			}
+		</div>
+	</div>
 </div>
+

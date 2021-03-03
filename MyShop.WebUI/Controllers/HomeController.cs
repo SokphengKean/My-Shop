@@ -6,24 +6,37 @@ using System.Web.Mvc;
 using MyShop.DataAccess.SQL;
 using MyShop.Core.Models;
 using MyShop.Core.Contracts;
+using MyShop.Core.ViewModels;
 
 namespace MyShop.WebUI.Controllers
 {
 	public class HomeController : Controller
 	{
-		IRepository<ProductCategory> category;
+		IRepository<ProductCategory> productCategoires;
 		IRepository<Product> context;
 
 		public HomeController(IRepository<Product> context, IRepository<ProductCategory> category)
 		{
 			this.context = context;
-			this.category = category;
+			this.productCategoires = category;
 		}
 
-		public ActionResult Index()
+		public ActionResult Index(string Category = null)
 		{
-			List<Product> products = context.Collection().ToList();
-			return View(products);
+			List<Product> products;
+			List<ProductCategory> categories = productCategoires.Collection().ToList();
+
+			if (Category == null)
+				products = context.Collection().ToList();
+			else
+				products = context.Collection().Where(p => p.Category == Category).ToList();
+
+			ProductListViewModel model = new ProductListViewModel();
+			model.product = products;
+			model.productCategories = categories;
+
+
+			return View(model);
 		}
 
 		public ActionResult Detail(string Id)
