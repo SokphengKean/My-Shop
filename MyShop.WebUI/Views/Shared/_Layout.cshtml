@@ -27,9 +27,13 @@
 						<li class="nav-item">
 							@Html.ActionLink("Product Category" , "Index" , "ProductCategory" , new { area = "" } , new { @class = "nav-link" })
 						</li>
-					</ul>
-					@Html.Partial("_LoginPartial")
+					</ul> 
 
+					@{
+						Html.RenderAction("BasketSummary" , "Basket");
+					}
+					
+					@Html.Partial("_LoginPartial")
 				</div>
 			</div>
 		</nav>

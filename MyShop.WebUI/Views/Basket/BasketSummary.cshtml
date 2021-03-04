@@ -1,0 +1,10 @@
+﻿@model MyShop.Core.ViewModels.BasketSummaryViewModel
+
+<ul class="nav navbar-nav text-right">
+	<li class="nav-item">
+		<a href="@Url.Action("Index", "Basket")" class="nav-link">@Model.BasketCount items</a>
+	</li>
+	<li class="nav-item">
+		<a href="@Url.Action("Index", "Basket")" class="nav-link">@string.Format("{0:c}", Model.BasketTotal)</a>
+	</li>
+</ul> 
